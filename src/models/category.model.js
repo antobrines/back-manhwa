@@ -1,29 +1,31 @@
 const mongoose = require('mongoose');
 const types = mongoose.Schema.Types;
 
-const userSchema = mongoose.Schema(
+const categorySchema = mongoose.Schema(
   {
-    username: {
+    name: {
       type: types.String,
       required: true,
       unique: true,
     },
-    password: {
+    slug: {
       type: types.String,
       required: true,
     },
-    email: {
-      type: types.String,
+    nsfw: {
+      type: types.Boolean,
       required: true,
-      unique: true,
+    },
+    id: {
+      type: types.Number,
+      required: true,
     },
   },
   {
     versionKey: false,
-    timestamps: true,
+    timestamps: false,
   }
 );
 
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+const Category = mongoose.model('Category', categorySchema);
+module.exports = Category;

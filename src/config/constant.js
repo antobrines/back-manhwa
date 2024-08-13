@@ -12,6 +12,6 @@ const constant = {
       created: 'User created',
     },
   },
-}
+};
 
-module.exports = constant
+module.exports = constant;

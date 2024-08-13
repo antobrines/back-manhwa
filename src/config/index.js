@@ -1,5 +1,5 @@
-const dotenv = require('dotenv')
-dotenv.config()
+const dotenv = require('dotenv');
+dotenv.config();
 
 module.exports = {
   port: process.env.PORT,
@@ -14,4 +14,4 @@ module.exports = {
     expire: process.env.TOKEN_EXPIRE,
   },
   apiUrl: process.env.API_ANIME,
-}
+};

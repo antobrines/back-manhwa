@@ -1,22 +1,22 @@
-const winston = require('winston')
-const DailyRotateFile = require('winston-daily-rotate-file')
+const winston = require('winston');
+const DailyRotateFile = require('winston-daily-rotate-file');
 
 const myFormat = winston.format.printf(
   ({ level, message, timestamp, body }) => {
-    const date = new Date(timestamp)
+    const date = new Date(timestamp);
     const formattedDate = `${date.getDate()}-${
       date.getMonth() + 1
-    }-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+    }-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 
-    let logMessage = `${formattedDate} ${level}: ${message}`
+    let logMessage = `${formattedDate} ${level}: ${message}`;
 
     if (body) {
-      logMessage += ` ${JSON.stringify(body)}`
+      logMessage += ` ${JSON.stringify(body)}`;
     }
 
-    return logMessage
+    return logMessage;
   }
-)
+);
 
 const createTransports = (folderName) => {
   const transports = [
@@ -26,7 +26,7 @@ const createTransports = (folderName) => {
         winston.format.simple()
       ),
     }),
-  ]
+  ];
   if (folderName) {
     transports.push(
       new DailyRotateFile({
@@ -35,18 +35,18 @@ const createTransports = (folderName) => {
         zippedArchive: true,
         format: winston.format.combine(winston.format.timestamp(), myFormat),
       })
-    )
+    );
   }
 
-  return transports
-}
+  return transports;
+};
 
 const createLogger = (logPath) => {
   const logger = winston.createLogger({
     transports: createTransports(logPath),
-  })
+  });
 
-  return logger
-}
+  return logger;
+};
 
-module.exports = { createLogger }
+module.exports = { createLogger };

@@ -1,4 +1,4 @@
-const Joi = require('joi')
+const Joi = require('joi');
 
 const register = {
   body: Joi.object().keys({
@@ -7,16 +7,16 @@ const register = {
     confirm_password: Joi.string().valid(Joi.ref('password')).required(),
     email: Joi.string().email().required(),
   }),
-}
+};
 
 const login = {
   body: Joi.object().keys({
     email: Joi.string().required(),
     password: Joi.string().required(),
   }),
-}
+};
 
 module.exports = {
   register,
   login,
-}
+};
