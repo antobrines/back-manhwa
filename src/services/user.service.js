@@ -2,11 +2,14 @@ const { User } = require('../models');
 const bcrypt = require('bcryptjs');
 const config = require('../config');
 const jwt = require('jsonwebtoken');
+const librairyService = require('./librairy.service');
 
 const create = async (userBody) => {
   if (userBody.password)
     userBody.password = bcrypt.hashSync(userBody.password, 10);
-  return User.create(userBody);
+  const user = await User.create(userBody);
+  await librairyService.createStandardList(user._id);
+  return user;
 };
 
 const findOneAndUpdate = async (email_user) => {

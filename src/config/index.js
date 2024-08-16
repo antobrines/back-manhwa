@@ -14,4 +14,8 @@ module.exports = {
     expire: process.env.TOKEN_EXPIRE,
   },
   apiUrl: process.env.API_ANIME,
+  deepl: {
+    url: process.env.DEEPL_URL,
+    authKey: process.env.DEEPL_API_KEY,
+  },
 };

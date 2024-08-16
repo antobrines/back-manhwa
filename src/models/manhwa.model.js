@@ -8,6 +8,10 @@ const manhwaSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
+    title_en: {
+      type: types.String,
+      required: false,
+    },
     slug: {
       type: types.String,
       required: true,
@@ -36,12 +40,28 @@ const manhwaSchema = mongoose.Schema(
       type: types.String,
       required: false,
     },
+    smallImage: {
+      type: types.String,
+      required: false,
+    },
     coverImage: {
       type: types.String,
       required: false,
     },
     id: {
       type: types.Number,
+      required: true,
+    },
+    status: {
+      type: types.String,
+      required: true,
+    },
+    description_fr: {
+      type: types.String,
+      required: false,
+    },
+    apiName: {
+      type: types.String,
       required: true,
     },
   },

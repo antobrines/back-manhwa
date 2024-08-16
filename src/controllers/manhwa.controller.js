@@ -4,15 +4,22 @@ const { successF } = require('../utils/message');
 const manhwaService = require('../services/manhwa.service');
 
 const getList = catchAsync(async (req, res) => {
-  const { page, categories, limit, sort, type } = req.query;
-  const userCreated = await manhwaService.getManhwaList(
+  const { page, categories, limit, sort, type, text } = req.query;
+  const { manhwaList, count } = await manhwaService.getManhwaList(
     categories,
     page,
     limit,
     sort,
-    type
+    type,
+    text
   );
-  successF('Manhwas found', userCreated, httpStatus.OK, res);
+  const toReturn = {
+    manhwas: manhwaList,
+    count,
+    page,
+    limit,
+  };
+  successF('Manhwas found', toReturn, httpStatus.OK, res);
 });
 
 const getManhwa = catchAsync(async (req, res) => {
