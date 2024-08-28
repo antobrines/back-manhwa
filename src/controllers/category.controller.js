@@ -4,8 +4,9 @@ const { successF } = require('../utils/message');
 const categoryService = require('../services/category.service');
 
 const getList = catchAsync(async (req, res) => {
-  const categories = await categoryService.getCategoryList();
-  successF('Manhwas found', categories, httpStatus.OK, res);
+  const { apiname, type } = req.query;
+  const categories = await categoryService.getCategoryList(type, apiname);
+  successF('Categories found', categories, httpStatus.OK, res);
 });
 
 module.exports = {

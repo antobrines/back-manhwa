@@ -15,10 +15,10 @@ const getManhwaList = async (categories, page, limit, sort, type, text) => {
     text
   );
   console.log(
-    `${config.apiUrl}/edge/manga?${filters}&page[limit]=${currentLimit}&page[offset]=${currentPage * currentLimit}&${currentSort}`
+    `${config.apis.kitsu}/edge/manga?${filters}&page[limit]=${currentLimit}&page[offset]=${currentPage * currentLimit}&${currentSort}`
   );
   const response = await axios.get(
-    `${config.apiUrl}/edge/manga?${filters}&page[limit]=${currentLimit}&page[offset]=${currentPage * currentLimit}&${currentSort}`
+    `${config.apis.kitsu}/edge/manga?${filters}&page[limit]=${currentLimit}&page[offset]=${currentPage * currentLimit}&${currentSort}`
   );
   const manhwaList = response.data.data.map(formatManhwa);
   const count = response.data.meta.count;
@@ -26,8 +26,8 @@ const getManhwaList = async (categories, page, limit, sort, type, text) => {
 };
 
 const getManhwa = async (id) => {
-  const response = await axios.get(`${config.apiUrl}/edge/manga/${id}`);
-  console.log(`${config.apiUrl}/edge/manga/${id}`);
+  const response = await axios.get(`${config.apis.kitsu}/edge/manga/${id}`);
+  console.log(`${config.apis.kitsu}/edge/manga/${id}`);
   const manhwa = formatManhwa(response.data.data);
 
   if ((await findByIdApi(id)) && manhwa) {
@@ -93,27 +93,6 @@ const deeplTranslate = async (text, targetLang) => {
   }
 };
 
-const mangaDexApiLogin = async () => {
-  const axios = require('axios');
-
-  const creds = {
-    grant_type: 'password',
-    username: '<your_username>',
-    password: '<your_password>',
-    client_id: '<your_client_id>',
-    client_secret: '<your_client_secret>',
-  };
-
-  const resp = await axios({
-    method: 'POST',
-    url: `https://auth.mangadex.org/realms/mangadex/protocol/openid-connect/token`,
-    data: creds,
-  });
-
-  const { access_token, refresh_token } = resp.data;
-  return { access_token, refresh_token };
-};
-
 // ** Database Service ** //
 const create = async (manhwa) => {
   const translation = await deeplTranslate(manhwa.description, 'FR');
@@ -141,7 +120,9 @@ const update = async (manhwa) => {
 const createByIdApi = async (manhwaId) => {
   const manhwa = await findByIdApi(manhwaId);
   if (!manhwa) {
-    const response = await axios.get(`${config.apiUrl}/edge/manga/${manhwaId}`);
+    const response = await axios.get(
+      `${config.apis.kitsu}/edge/manga/${manhwaId}`
+    );
     const manhwa = formatManhwa(response.data.data);
     return create(manhwa);
   }

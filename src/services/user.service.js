@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const config = require('../config');
 const jwt = require('jsonwebtoken');
 const librairyService = require('./librairy.service');
+const mangadexAuthService = require('./mangadex-auth.service');
 
 const create = async (userBody) => {
   if (userBody.password)
@@ -55,7 +56,7 @@ const login = async (req) => {
     },
     config.token.secret
   );
-
+  await mangadexAuthService.getMangaDexAccessToken();
   const test = await compareAsync(password, user.password);
   if (test) {
     return accessToken;

@@ -6,19 +6,26 @@ const categorySchema = mongoose.Schema(
     name: {
       type: types.String,
       required: true,
-      unique: true,
     },
     slug: {
       type: types.String,
-      required: true,
+      required: false,
     },
     nsfw: {
       type: types.Boolean,
       required: true,
     },
     id: {
-      type: types.Number,
+      type: types.String,
       required: true,
+    },
+    apiName: {
+      type: types.String,
+      required: true,
+    },
+    format: {
+      type: types.String,
+      required: false,
     },
   },
   {
