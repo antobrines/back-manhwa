@@ -28,9 +28,9 @@ const getManhwasFromLibrairies = catchAsync(async (req, res) => {
 });
 
 const addManhwa = catchAsync(async (req, res) => {
-  const { librairyId, id } = req.params;
+  const { librairyId, id, apiname } = req.params;
   const user = req.user;
-  const librairy = await librairyService.addManhwa(librairyId, id, user.userId);
+  const librairy = await librairyService.addManhwa(librairyId, id, user.userId, apiname);
   successF(
     `Manhwa added to the librairy "${librairy.name}"`,
     librairy,
@@ -40,12 +40,13 @@ const addManhwa = catchAsync(async (req, res) => {
 });
 
 const removeManhwa = catchAsync(async (req, res) => {
-  const { librairyId, id } = req.params;
+  const { librairyId, id, apiname } = req.params;
   const user = req.user;
   const librairy = await librairyService.removeManhwa(
     librairyId,
     id,
-    user.userId
+    user.userId,
+    apiname
   );
   successF(
     `Manhwa removed from the librairy ${librairy.name}`,

@@ -31,8 +31,8 @@ const getManhwasFromLibrairies = async (userId) => {
   return manhwaIds;
 };
 
-const addManhwa = async (librairyId, manhwaId, userId) => {
-  const manhwa = await manhwaService.createByIdApi(manhwaId);
+const addManhwa = async (librairyId, manhwaId, userId, apiName) => {
+  const manhwa = await manhwaService.createByIdApi(manhwaId, apiName);
   const manhwaPersonnal = await manhwaPersonnalService.createOrGet(
     manhwa._id,
     userId
@@ -44,8 +44,8 @@ const addManhwa = async (librairyId, manhwaId, userId) => {
   );
 };
 
-const removeManhwa = async (librairyId, manhwaId, userId) => {
-  const manhwa = await manhwaService.createByIdApi(manhwaId);
+const removeManhwa = async (librairyId, manhwaId, userId, apiName) => {
+  const manhwa = await manhwaService.createByIdApi(manhwaId, apiName);
   const manhwaPersonnal = await manhwaPersonnalService.remove(manhwa, userId);
   return Librairy.findByIdAndUpdate(
     librairyId,

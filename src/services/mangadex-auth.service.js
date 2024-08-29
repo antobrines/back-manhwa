@@ -41,7 +41,7 @@ const mangaDexApiLogin = async () => {
   const client = await connectRedis();
   client.set('mangadex_access_token', access_token);
   client.set('mangadex_refresh_token', refresh_token);
-  getMangaDexAccessToken();
+  client.quit();
   return { access_token, refresh_token };
 };
 
@@ -69,6 +69,7 @@ const getMangaDexAccessToken = async () => {
     const { access_token, refresh_token } = resp.data;
     client.set('mangadex_access_token', access_token);
     client.set('mangadex_refresh_token', refresh_token);
+    client.quit();
     currentAccessToken = access_token;
   }
   return currentAccessToken;

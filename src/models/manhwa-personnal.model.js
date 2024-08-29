@@ -19,6 +19,10 @@ const manhwaPersonnalSchema = mongoose.Schema(
       type: types.ObjectId,
       ref: User,
     },
+    url: {
+      type: types.String,
+      required: false,
+    },
   },
   {
     versionKey: false,

@@ -29,10 +29,18 @@ const remove = async (manhwa, userId) => {
   return deletedManhwaPersonnal ? deletedManhwaPersonnal._id : null;
 };
 
-const update = async (nbChapterViewed, id) => {
+const updateChapterViewed = async (nbChapterViewed, _id) => {
   return ManhwaPersonnal.findByIdAndUpdate(
-    id,
+    _id,
     { nbChapterViewed },
+    { new: true }
+  );
+};
+
+const updateUrl = async (url, _id) => {
+  return ManhwaPersonnal.findByIdAndUpdate(
+    _id,
+    { url },
     { new: true }
   );
 };
@@ -42,5 +50,6 @@ module.exports = {
   createOrGet,
   getWithManhwa,
   remove,
-  update,
+  updateChapterViewed,
+  updateUrl,
 };

@@ -14,15 +14,15 @@ const manhwaSchema = mongoose.Schema(
     },
     slug: {
       type: types.String,
-      required: true,
+      required: false,
     },
     synopsis: {
       type: types.String,
-      required: true,
+      required: false,
     },
     description: {
       type: types.String,
-      required: true,
+      required: false,
     },
     startDate: {
       type: types.Date,
@@ -49,7 +49,7 @@ const manhwaSchema = mongoose.Schema(
       required: false,
     },
     id: {
-      type: types.Number,
+      type: types.String,
       required: true,
     },
     status: {
