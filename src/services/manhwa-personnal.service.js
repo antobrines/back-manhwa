@@ -38,11 +38,7 @@ const updateChapterViewed = async (nbChapterViewed, _id) => {
 };
 
 const updateUrl = async (url, _id) => {
-  return ManhwaPersonnal.findByIdAndUpdate(
-    _id,
-    { url },
-    { new: true }
-  );
+  return ManhwaPersonnal.findByIdAndUpdate(_id, { url }, { new: true });
 };
 
 module.exports = {

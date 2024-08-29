@@ -11,6 +11,11 @@ router.get(
   validate(manhwaValidation.getList),
   manhwaController.getList
 );
-router.get('/:id', isConnected, validate(manhwaValidation.getOne), manhwaController.getManhwa);
+router.get(
+  '/:id',
+  isConnected,
+  validate(manhwaValidation.getOne),
+  manhwaController.getManhwa
+);
 
 module.exports = router;

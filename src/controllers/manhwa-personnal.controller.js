@@ -4,9 +4,12 @@ const { successF } = require('../utils/message');
 const manhwaPersonnalS = require('../services/manhwa-personnal.service');
 
 const updateChapterViewed = catchAsync(async (req, res) => {
-  const {nbChapterViewed} = req.body;
+  const { nbChapterViewed } = req.body;
   const id = req.params.id;
-  const manhwaPersonnal = await manhwaPersonnalS.updateChapterViewed(nbChapterViewed, id);
+  const manhwaPersonnal = await manhwaPersonnalS.updateChapterViewed(
+    nbChapterViewed,
+    id
+  );
   successF('nbViewedUpdated', manhwaPersonnal, httpStatus.OK, res);
 });
 

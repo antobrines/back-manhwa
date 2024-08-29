@@ -30,7 +30,12 @@ const getManhwasFromLibrairies = catchAsync(async (req, res) => {
 const addManhwa = catchAsync(async (req, res) => {
   const { librairyId, id, apiname } = req.params;
   const user = req.user;
-  const librairy = await librairyService.addManhwa(librairyId, id, user.userId, apiname);
+  const librairy = await librairyService.addManhwa(
+    librairyId,
+    id,
+    user.userId,
+    apiname
+  );
   successF(
     `Manhwa added to the librairy "${librairy.name}"`,
     librairy,

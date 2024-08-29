@@ -6,7 +6,15 @@ const logger = createLogger();
 const mangaDexAuthService = require('./mangadex-auth.service');
 
 // ** API Service ** //
-const getManhwaList = async (categories, page, limit, sort, type, text, apiName) => {
+const getManhwaList = async (
+  categories,
+  page,
+  limit,
+  sort,
+  type,
+  text,
+  apiName
+) => {
   const { currentLimit, currentPage, filters, currentSort } = getRequestParams(
     categories,
     page,
@@ -27,7 +35,7 @@ const getManhwaList = async (categories, page, limit, sort, type, text, apiName)
   } else {
     console.log(
       `${config.apis.mangadex}/manga?${filters}&includes[]=cover_art&limit=${currentLimit}&offset=${currentPage * currentLimit}&${currentSort}`
-    )
+    );
     response = await axios.get(
       `${config.apis.mangadex}/manga?${filters}&includes[]=cover_art&limit=${currentLimit}&offset=${currentPage * currentLimit}&${currentSort}`,
       {
@@ -40,7 +48,8 @@ const getManhwaList = async (categories, page, limit, sort, type, text, apiName)
   const manhwaList = response.data.data.map((manhwa) => {
     return formatManhwa(manhwa, apiName);
   });
-  const count = apiName === 'kitsu' ? response.data.meta.count : response.data.total;
+  const count =
+    apiName === 'kitsu' ? response.data.meta.count : response.data.total;
   return { manhwaList, count };
 };
 
@@ -49,11 +58,14 @@ const getManhwa = async (id, apiName) => {
   if (apiName === 'kitsu') {
     response = await axios.get(`${config.apis.kitsu}/edge/manga/${id}`);
   } else {
-    response = await axios.get(`${config.apis.mangadex}/manga/${id}?includes[]=cover_art`, {
-      headers: {
-        Authorization: `Bearer ${await mangaDexAuthService.getMangaDexAccessToken()}`,
-      },
-    });
+    response = await axios.get(
+      `${config.apis.mangadex}/manga/${id}?includes[]=cover_art`,
+      {
+        headers: {
+          Authorization: `Bearer ${await mangaDexAuthService.getMangaDexAccessToken()}`,
+        },
+      }
+    );
   }
   const manhwa = formatManhwa(response.data.data, apiName);
 
@@ -63,7 +75,15 @@ const getManhwa = async (id, apiName) => {
   return await create(manhwa);
 };
 
-const getRequestParams = (categories, page, limit, sort, type, text, apiName) => {
+const getRequestParams = (
+  categories,
+  page,
+  limit,
+  sort,
+  type,
+  text,
+  apiName
+) => {
   const currentLimit = limit || 8;
   const currentPage = page || 0;
   const currentSort = sort || '';
@@ -109,10 +129,9 @@ const addAndFilter = (filters, name, datas, apiName) => {
   }
   if (apiName === 'kitsu') {
     return filters + `filter[${name}]=${datas}`;
-  } 
+  }
   const words = datas.split(',');
   return filters + words.map((word) => `${name}=${word}`).join('&');
- 
 };
 
 const deeplTranslate = async (text, targetLang) => {
@@ -198,7 +217,7 @@ const formatManhwa = (manhwa, apiName) => {
     slug: null,
     synopsis: manhwa.attributes.description.en,
     description: manhwa.attributes.description.en,
-    title: manhwa.attributes.title.en,
+    title: manhwa.attributes.title.en || manhwa.attributes.altTitles.en,
     title_en: manhwa.attributes.title.en,
     startDate: null,
     endDate: null,
