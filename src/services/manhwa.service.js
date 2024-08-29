@@ -2,7 +2,7 @@ const config = require('../config');
 const axios = require('axios');
 const Manhwa = require('../models/manhwa.model');
 const { createLogger } = require('../utils/log');
-const logger = createLogger('deepl');
+const logger = createLogger();
 const mangaDexAuthService = require('./mangadex-auth.service');
 
 // ** API Service ** //

@@ -6,7 +6,7 @@ const app = express();
 const { errorF } = require('./utils/message');
 const routes = require('./routes');
 const { createLogger } = require('./utils/log');
-const logger = createLogger('request');
+const logger = createLogger();
 
 app.set('trust proxy', 1);
 app.use(cors());

@@ -3,7 +3,7 @@ const config = require('./config/index');
 const mongoose = require('mongoose');
 const port = config.port || 3000;
 const { createLogger } = require('./utils/log');
-const logger = createLogger('app');
+const logger = createLogger();
 
 mongoose.set('strictQuery', true);
 mongoose.connect(`${config.db.url}`).then(() => {
