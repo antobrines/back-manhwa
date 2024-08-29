@@ -7,7 +7,7 @@ const { errorF } = require('./utils/message');
 const routes = require('./routes');
 const { createLogger } = require('./utils/log');
 const logger = createLogger();
-
+const axios = require('axios');
 app.set('trust proxy', 1);
 app.use(cors());
 app.use(helmet());
@@ -32,6 +32,22 @@ app.use('/api', routes);
 app.get('/', (req, res) => {
   res.json({
     message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄👨‍🔧🐱‍🚀✌',
+  });
+});
+
+app.get('/api/proxy-image', (req, res) => {
+  const imageUrl = req.query.url;
+  if (!imageUrl) {
+      return res.status(400).send('URL d\'image manquante');
+  }
+  axios({
+      method: 'get',
+      url: imageUrl,
+      responseType: 'stream'
+  }).then((response) => {
+    response.data.pipe(res);
+  }).catch((error) => {
+      res.status(500).send('Erreur lors de la récupération de l\'image');
   });
 });
 
