@@ -11,7 +11,16 @@ const getLibrairies = async (userId) => {
   return Librairy.find({ user: userId });
 };
 
-const getLibrairyWithManhwasInformations = async (librairyId) => {
+const getLibrairyWithManhwasInformations = async (librairyId, sort) => {
+  let realSort = {};
+  if (sort) {
+    if (sort === 'nbChapterViewedDesc') {
+      realSort = { 'nbChapterViewed': -1 };
+    }
+    if (sort === 'nbChapterViewedAsc') {
+      realSort = { 'nbChapterViewed': 1 };
+    }
+  }
   return Librairy.findById(librairyId)
     .populate({
       path: 'manhwasPersonnal',
@@ -19,8 +28,29 @@ const getLibrairyWithManhwasInformations = async (librairyId) => {
         path: 'manhwa',
         model: 'Manhwa',
       },
+      options: {
+        sort: realSort,
+      },
     })
-    .exec();
+    .then((librairy) => {
+      if (sort && librairy) {
+        if (sort === 'titleAsc') {
+          librairy.manhwasPersonnal.sort((a, b) => {
+            if (a.manhwa.title_en < b.manhwa.title_en) return -1;
+            if (a.manhwa.title_en > b.manhwa.title_en) return 1;
+            return 0;
+          });
+        }
+        if (sort === 'titleDesc') {
+          librairy.manhwasPersonnal.sort((a, b) => {
+            if (a.manhwa.title_en < b.manhwa.title_en) return 1;
+            if (a.manhwa.title_en > b.manhwa.title_en) return -1;
+            return 0;
+          });
+        }
+      }
+      return librairy;
+    });
 };
 
 const getManhwasFromLibrairies = async (userId) => {

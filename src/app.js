@@ -8,6 +8,7 @@ const routes = require('./routes');
 const { createLogger } = require('./utils/log');
 const logger = createLogger();
 const axios = require('axios');
+const sharp = require('sharp');
 
 const memoryCache = new Map();
 
@@ -60,14 +61,18 @@ app.get('/api/proxy-image', async (req, res) => {
       responseType: 'arraybuffer',
     });
 
-    const imageData = Buffer.from(response.data).toString('base64');
+    const resizedImageBuffer = await sharp(response.data)
+      .resize(284, 402)
+      .toBuffer();
+    
+    const imageData = resizedImageBuffer.toString('base64');
     memoryCache.set(imageUrl, {
       contentType: response.headers['content-type'],
       data: imageData,
     });
     console.log('Image from API');
     res.setHeader('Content-Type', response.headers['content-type']);
-    res.send(response.data);
+    res.send(resizedImageBuffer);
   } catch (error) {
     console.error(error);
     res.status(500).send("Erreur lors de la récupération de l'image");
