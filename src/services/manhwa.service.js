@@ -3,7 +3,7 @@ const axios = require('axios');
 const Manhwa = require('../models/manhwa.model');
 const { createLogger } = require('../utils/log');
 const logger = createLogger();
-const mangaDexAuthService = require('./mangadex-auth.service');
+// const mangaDexAuthService = require('./mangadex-auth.service');
 
 // ** API Service ** //
 const getManhwaList = async (
@@ -37,12 +37,12 @@ const getManhwaList = async (
       `${config.apis.mangadex}/manga?${filters}&includes[]=cover_art&limit=${currentLimit}&offset=${currentPage * currentLimit}&${currentSort}`
     );
     response = await axios.get(
-      `${config.apis.mangadex}/manga?${filters}&includes[]=cover_art&limit=${currentLimit}&offset=${currentPage * currentLimit}&${currentSort}`,
-      {
-        headers: {
-          Authorization: `Bearer ${await mangaDexAuthService.getMangaDexAccessToken()}`,
-        },
-      }
+      `${config.apis.mangadex}/manga?${filters}&includes[]=cover_art&limit=${currentLimit}&offset=${currentPage * currentLimit}&${currentSort}`
+      // {
+      //   headers: {
+      //     Authorization: `Bearer ${await mangaDexAuthService.getMangaDexAccessToken()}`,
+      //   },
+      // }
     );
   }
   const manhwaList = response.data.data.map((manhwa) => {
@@ -59,12 +59,12 @@ const getManhwa = async (id, apiName) => {
     response = await axios.get(`${config.apis.kitsu}/edge/manga/${id}`);
   } else {
     response = await axios.get(
-      `${config.apis.mangadex}/manga/${id}?includes[]=cover_art`,
-      {
-        headers: {
-          Authorization: `Bearer ${await mangaDexAuthService.getMangaDexAccessToken()}`,
-        },
-      }
+      `${config.apis.mangadex}/manga/${id}?includes[]=cover_art`
+      // {
+      //   headers: {
+      //     Authorization: `Bearer ${await mangaDexAuthService.getMangaDexAccessToken()}`,
+      //   },
+      // }
     );
   }
   const manhwa = formatManhwa(response.data.data, apiName);

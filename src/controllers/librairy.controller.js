@@ -16,8 +16,10 @@ const get = catchAsync(async (req, res) => {
 const getLibrairyWithManhwasInformations = catchAsync(async (req, res) => {
   const { librairyId } = req.params;
   const sort = req.query.sort;
-  const librairy =
-    await librairyService.getLibrairyWithManhwasInformations(librairyId, sort);
+  const librairy = await librairyService.getLibrairyWithManhwasInformations(
+    librairyId,
+    sort
+  );
   successF('Librairy with Manhwas informations', librairy, httpStatus.OK, res);
 });
 

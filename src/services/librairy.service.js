@@ -15,10 +15,10 @@ const getLibrairyWithManhwasInformations = async (librairyId, sort) => {
   let realSort = {};
   if (sort) {
     if (sort === 'nbChapterViewedDesc') {
-      realSort = { 'nbChapterViewed': -1 };
+      realSort = { nbChapterViewed: -1 };
     }
     if (sort === 'nbChapterViewedAsc') {
-      realSort = { 'nbChapterViewed': 1 };
+      realSort = { nbChapterViewed: 1 };
     }
   }
   return Librairy.findById(librairyId)

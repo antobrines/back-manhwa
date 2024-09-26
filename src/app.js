@@ -64,7 +64,7 @@ app.get('/api/proxy-image', async (req, res) => {
     const resizedImageBuffer = await sharp(response.data)
       .resize(284, 402)
       .toBuffer();
-    
+
     const imageData = resizedImageBuffer.toString('base64');
     memoryCache.set(imageUrl, {
       contentType: response.headers['content-type'],

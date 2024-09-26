@@ -1,7 +1,7 @@
 const config = require('../config');
 const axios = require('axios');
 const Category = require('../models/category.model');
-const mangadexAuthService = require('./mangadex-auth.service');
+// const mangadexAuthService = require('./mangadex-auth.service');
 
 // ** API Service ** //
 const getCategoryList = async (type, apiName) => {
@@ -13,9 +13,9 @@ const getCategoryList = async (type, apiName) => {
   } else {
     try {
       response = await axios.get(`${config.apis.mangadex}/manga/tag`, {
-        headers: {
-          Authorization: `Bearer ${await mangadexAuthService.getMangaDexAccessToken()}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${await mangadexAuthService.getMangaDexAccessToken()}`,
+        // },
       });
     } catch (error) {
       console.error(error);
