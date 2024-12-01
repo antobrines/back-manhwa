@@ -84,6 +84,30 @@ const removeManhwa = async (librairyId, manhwaId, userId, apiName) => {
   );
 };
 
+const changeList = async (manhwaId, userId, toList, fromList, apiName) => {
+  const manhwa = await manhwaService.createByIdApi(manhwaId, apiName);
+  const manhwaPersonnal = await manhwaPersonnalService.createOrGet(
+    manhwa,
+    userId
+  );
+  const oldLibrairy = await Librairy.findOne({ _id: fromList, user: userId });
+  await Librairy.findByIdAndUpdate(
+    oldLibrairy._id,
+    { $pull: {
+      manhwasPersonnal: manhwaPersonnal._id,
+    } },
+    { new: true }
+  );
+  const newLibrairy = await Librairy.findOne({ _id: toList, user: userId });
+  return Librairy.findByIdAndUpdate(
+    newLibrairy._id,
+    { $addToSet: {
+      manhwasPersonnal: manhwaPersonnal._id,
+    } },
+    { new: true }
+  );
+}
+
 const createStandardList = async (userId) => {
   const librairies = [
     {
@@ -128,4 +152,5 @@ module.exports = {
   removeManhwa,
   getLibrairyWithManhwasInformations,
   getManhwasFromLibrairies,
+  changeList,
 };

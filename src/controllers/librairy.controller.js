@@ -64,6 +64,20 @@ const removeManhwa = catchAsync(async (req, res) => {
   );
 });
 
+const changeList = catchAsync(async (req, res) => {
+  const { toList, id, fromList } = req.params;
+  const { apiname } = req.query;
+  console.log({ toList, id, fromList, apiname });
+  const user = req.user;
+  const librairy = await librairyService.changeList(id, user.userId, toList, fromList, apiname);
+  successF(
+    `Manhwa moved to the list ${librairy.name}`,
+    librairy,
+    httpStatus.OK,
+    res
+  );
+});
+
 module.exports = {
   create,
   get,
@@ -71,4 +85,5 @@ module.exports = {
   removeManhwa,
   getLibrairyWithManhwasInformations,
   getManhwasFromLibrairies,
+  changeList,
 };

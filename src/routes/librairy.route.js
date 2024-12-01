@@ -25,5 +25,6 @@ router.delete(
   isConnected,
   librairyController.removeManhwa
 );
+router.put('/:fromList/manhwa/:id/new-librairy/:toList', isConnected, librairyController.changeList);
 
 module.exports = router;
