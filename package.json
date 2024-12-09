@@ -33,6 +33,7 @@
     "format:write": "prettier --write .",
     "lint:check": "eslint",
     "lint:fix": "eslint --fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "start": "node src/index.js"
   }
 }

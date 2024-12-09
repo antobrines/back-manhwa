@@ -69,6 +69,7 @@ app.get('/api/proxy-image', async (req, res) => {
     memoryCache.set(imageUrl, {
       contentType: response.headers['content-type'],
       data: imageData,
+      stdTTL: 60,
     });
     console.log('Image from API');
     res.setHeader('Content-Type', response.headers['content-type']);
