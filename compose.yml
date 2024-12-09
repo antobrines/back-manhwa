@@ -4,5 +4,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.manhwa-back.rule=Host(`api.manhwa.abrines.fr`)"
+      - "traefik.http.routers.manhwa-back.entrypoints=websecure"
+      - "traefik.http.routers.manhwa-back.tls.certresolver=myresolver"
+    networks:
+      - traefik-public
+
+networks:
+  traefik-public:
+    external: true
