@@ -8,7 +8,7 @@ const librairySchema = mongoose.Schema(
     name: {
       type: types.String,
       required: true,
-      unique: true,
+      unique: false,
     },
     slug: {
       type: types.String,

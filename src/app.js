@@ -9,7 +9,6 @@ const { createLogger } = require('./utils/log');
 const logger = createLogger();
 const axios = require('axios');
 const sharp = require('sharp');
-
 const memoryCache = new Map();
 
 app.set('trust proxy', 1);
@@ -51,6 +50,7 @@ app.get('/api/proxy-image', async (req, res) => {
       console.log('Image from cache');
       const cachedImage = memoryCache.get(imageUrl);
       res.setHeader('Content-Type', cachedImage.contentType);
+      // eslint-disable-next-line no-undef
       const buffer = Buffer.from(cachedImage.data, 'base64');
       return res.send(buffer);
     }

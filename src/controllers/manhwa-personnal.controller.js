@@ -13,6 +13,13 @@ const updateChapterViewed = catchAsync(async (req, res) => {
   successF('nbViewedUpdated', manhwaPersonnal, httpStatus.OK, res);
 });
 
+const updateChapters = catchAsync(async (req, res) => {
+  const { nbChapters } = req.body;
+  const id = req.params.id;
+  const manhwaPersonnal = await manhwaPersonnalS.updateChapters(nbChapters, id);
+  successF('nbChaptersUpdated', manhwaPersonnal, httpStatus.OK, res);
+});
+
 const updateUrl = catchAsync(async (req, res) => {
   const { url } = req.body;
   const id = req.params.id;
@@ -23,4 +30,5 @@ const updateUrl = catchAsync(async (req, res) => {
 module.exports = {
   updateChapterViewed,
   updateUrl,
+  updateChapters,
 };

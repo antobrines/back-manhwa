@@ -5,5 +5,6 @@ const { isConnected } = require('../middlewares/user.middleware');
 
 router.put('/:id/chapters', isConnected, manhwaPersonnal.updateChapterViewed);
 router.put('/:id/url', isConnected, manhwaPersonnal.updateUrl);
+router.put('/:id/chapters-total', isConnected, manhwaPersonnal.updateChapters);
 
 module.exports = router;

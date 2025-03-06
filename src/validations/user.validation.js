@@ -4,7 +4,7 @@ const register = {
   body: Joi.object().keys({
     username: Joi.string().min(2).max(30).required(),
     password: Joi.string().trim().min(6).required(),
-    confirm_password: Joi.string().valid(Joi.ref('password')).required(),
+    confirmPassword: Joi.string().valid(Joi.ref('password')).required(),
     email: Joi.string().email().required(),
   }),
 };

@@ -37,6 +37,10 @@ const updateChapterViewed = async (nbChapterViewed, _id) => {
   );
 };
 
+const updateChapters = async (nbChapters, _id) => {
+  return ManhwaPersonnal.findByIdAndUpdate(_id, { nbChapters }, { new: true });
+}
+
 const updateUrl = async (url, _id) => {
   return ManhwaPersonnal.findByIdAndUpdate(_id, { url }, { new: true });
 };
@@ -48,4 +52,5 @@ module.exports = {
   remove,
   updateChapterViewed,
   updateUrl,
+  updateChapters,
 };
