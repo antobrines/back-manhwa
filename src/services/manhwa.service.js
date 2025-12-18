@@ -212,13 +212,24 @@ const formatManhwa = (manhwa, apiName) => {
     (relationship) => relationship.type === 'cover_art'
   );
   const fileName = coverArt.attributes.fileName;
+  const englishTitle =
+    manhwa.attributes.title?.en ||
+    manhwa.attributes.altTitles?.find(
+      (alt) => alt.en || alt['en-us'] || alt.en_us
+    )?.en ||
+    manhwa.attributes.altTitles?.find((alt) => alt['en-us'])?.['en-us'] ||
+    manhwa.attributes.altTitles?.find((alt) => alt.en_us)?.en_us;
+  const firstAltTitle = Object.values(
+    manhwa.attributes.altTitles?.[0] || {}
+  )[0];
+  const title = englishTitle || firstAltTitle || manhwa.attributes.title?.en;
   return {
     id: manhwa.id,
     slug: null,
     synopsis: manhwa.attributes.description.en,
     description: manhwa.attributes.description.en,
-    title: manhwa.attributes.title.en || manhwa.attributes.altTitles.en,
-    title_en: manhwa.attributes.title.en,
+    title,
+    title_en: title,
     startDate: null,
     endDate: null,
     type: manhwa.type,

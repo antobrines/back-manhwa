@@ -1,0 +1,12 @@
+services:
+  manhwa-back:
+    image: manhwa-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.manhwa-back.rule=Host(`api.manhwa.abrines.fr`)
+      - traefik.http.routers.manhwa-back.entrypoints=websecure
+      - traefik.http.routers.manhwa-back.tls=true
+      - traefik.http.services.manhwa-back.loadbalancer.server.port=3000
