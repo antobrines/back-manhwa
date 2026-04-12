@@ -26,9 +26,22 @@ const updateUrl = catchAsync(async (req, res) => {
   const manhwaPersonnal = await manhwaPersonnalS.updateUrl(url, id);
   successF('urlUpdated', manhwaPersonnal, httpStatus.OK, res);
 });
+const getByManhwaIdApi = catchAsync(async (req, res) => {
+  const manhwaApiId = req.params.id;
+  const userId = req.user.userId;
+  const manhwaPersonnal = await manhwaPersonnalS.getByManhwaIdApiAndUserId(
+    manhwaApiId,
+    userId
+  );
+  if (!manhwaPersonnal) {
+    return res.status(httpStatus.NOT_FOUND).json({ message: 'Not found' });
+  }
+  successF('manhwaPersonnalFound', manhwaPersonnal, httpStatus.OK, res);
+});
 
 module.exports = {
   updateChapterViewed,
   updateUrl,
   updateChapters,
+  getByManhwaIdApi,
 };

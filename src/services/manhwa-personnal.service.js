@@ -1,4 +1,6 @@
 const ManhwaPersonnal = require('../models/manhwa-personnal.model');
+const Manhwa = require('../models/manhwa.model');
+const Librairy = require('../models/librairy.model');
 
 // ** Database Service ** //
 const create = async (manhwaPersonnal) => {
@@ -19,6 +21,28 @@ const createOrGet = async (manhwaId, userId) => {
 
 const getWithManhwa = async (userId) => {
   return ManhwaPersonnal.find({ user: userId }).populate('manhwa');
+};
+
+const getByManhwaIdApiAndUserId = async (manhwaApiId, userId) => {
+  const manhwaItem = await Manhwa.findOne({ id: manhwaApiId });
+  if (!manhwaItem) return null;
+  const manhwaPersonnal = await ManhwaPersonnal.findOne({
+    manhwa: manhwaItem._id,
+    user: userId,
+  }).populate('manhwa').lean();
+
+  if (manhwaPersonnal) {
+    const librairy = await Librairy.findOne({ manhwasPersonnal: manhwaPersonnal._id });
+    if (librairy) {
+      manhwaPersonnal.lib = {
+        _id: librairy._id,
+        name: librairy.name,
+        slug: librairy.slug,
+      };
+    }
+  }
+
+  return manhwaPersonnal;
 };
 
 const remove = async (manhwa, userId) => {
@@ -49,6 +73,7 @@ module.exports = {
   create,
   createOrGet,
   getWithManhwa,
+  getByManhwaIdApiAndUserId,
   remove,
   updateChapterViewed,
   updateUrl,
